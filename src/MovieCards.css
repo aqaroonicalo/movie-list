@@ -1,10 +1,25 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+img #movieposter{
+  flex: left;
+  size: 50%;
+}
 div #moviecard{
-    border-width: 10px;
-    border-style: solid;
-    border: #c43232;
-    background-color: gray;
+  border: 10px, solid, #FFFFFF;
+  border-radius: 5%;
+  column-count: 2;
+  box-shadow: -10px 5px 10px 10px rgb(168, 146, 146);
+  margin: 5%;
+}
+.movieTitle {
+  text-align: center;
+  padding: 10px;
+  text-wrap:wrap;
+  margin: 10%
+}
+.moviedescription {
+  text-align: center;
+  margin: 10%
 }
 li { 
     color: #FFFFFF; 
@@ -13,18 +28,6 @@ li {
     position: relative;
     font-size: 20px;
     line-height: 30px;
-    
-    &:before {
-      content: '';
-      display: block;
-      height: 42px;
-      width: 42px;
-      border-radius: 50%;
-      border: 2px solid #ddd;
-      position: absolute; 
-      top: -12px;
-      left: -46px;
-    }
   }
   
 ul {

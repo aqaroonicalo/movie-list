@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import './MovieCards.css'
+import { useStore } from "zustand";
+import { likedMoviesStore } from "./App";
 
 
-function MovieCard(props) {
+export function MovieCard(props) {
     let [info, setInfo] = useState({})
+    let [liked, setLike] = useState(false)
 
     useEffect(() => {
 
@@ -22,11 +25,29 @@ function MovieCard(props) {
             }})()
     },[])
 
-    return <div id="moviecard"> <li key={props.data.imdbID}> <h1>{props.data.Title}</h1> <p>
+    const addLike = likedMoviesStore((state) => state.addLike)
+    const removeLike = likedMoviesStore((state) => state.removeLike)
+
+    function handleLike(title) {
+        
+        if (!liked) {
+            addLike(title)
+            setLike(true)
+        }else {
+            removeLike(title)
+            setLike(false)
+        }
+    }
+
+
+    return <div id="moviecard"> <li key={props.data.imdbID}> <img id="movieposter" src={info.Poster}></img> <h2 className="movietitle">{props.data.Title}</h2>
+         <p className="moviedescription">
 
             {info.Plot}
         
-        </p></li>
+        </p>
+        <button onClick={() => handleLike(props.data.Title)} > {liked ? ' LIKED!': 'Click To Like'}</button>
+        </li>
     </div>
 }
 function List(props) {
@@ -49,7 +70,7 @@ function List(props) {
 
 function MovieCards() {
     let [movieData, setMovieData] = useState({})
-
+    
     useEffect(() => {
         
         (async () => { const url = "https://www.omdbapi.com/?s=SUPERMAN&apikey=881763cb"

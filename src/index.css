@@ -25,7 +25,8 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column;
+  place-items: left;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -42,9 +43,10 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #ff4646;
   cursor: pointer;
   transition: border-color 0.25s;
+  margin: 10px;
 }
 button:hover {
   border-color: #646cff;
