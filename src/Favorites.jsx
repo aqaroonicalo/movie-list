@@ -12,7 +12,7 @@ function Favorites () {
         <ul>
           {likedMovies.map((movie) => {
             console.log(movie)
-            return <li>{movie} </li>;
+            return <li key={likedMovies.indexOf(movie)}>{movie} </li>;
           })}
         </ul>
     </div>

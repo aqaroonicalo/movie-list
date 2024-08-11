@@ -40,15 +40,26 @@ export function MovieCard(props) {
     }
 
 
-    return <div id="moviecard"> <li key={props.data.imdbID}> <img id="movieposter" src={info.Poster}></img> <h2 className="movietitle">{props.data.Title}</h2>
-         <p className="moviedescription">
-
-            {info.Plot}
-        
-        </p>
-        <button onClick={() => handleLike(props.data.Title)} > {liked ? ' LIKED!': 'Click To Like'}</button>
-        </li>
+    return <li className="card" style={{ width: '36rem', margin: 'auto', padding: '5px' }} key={props.data.imdbID}>
+    <div className="d-flex">
+      <div style={{ flex: '0 0 auto', width: '50%', marginRight: '10px', display: 'flex', alignItems: 'center' }}>
+        <img
+          src={info.Poster}
+          alt="Card image cap"
+          style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+        />
+      </div>
+      <div style={{ flex: '1 1 auto' }}>
+        <div className="card-body p-0">
+          <h5 className="card-title mb-2" style={{ fontSize: '1rem', marginBottom: '5px' }}>{props.data.Title}</h5>
+          <p className="card-text mb-2" style={{ fontSize: '0.9rem', marginBottom: '5px' }}>{info.Plot}</p>
+          <button onClick={() => handleLike(props.data.Title)} className="btn btn-primary btn-sm">
+            {liked ? 'LIKED!' : 'Click To Like'}
+          </button>
+        </div>
+      </div>
     </div>
+  </li>
 }
 function List(props) {
     if (!props.movies) {
@@ -59,7 +70,7 @@ function List(props) {
         return <div>No movies loaded</div>
     }
     return (
-        <ul>
+        <ul >
           {props.movies.map((movie) => {
             console.log(movie)
             return <MovieCard data={movie}/>;

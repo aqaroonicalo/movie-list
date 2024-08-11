@@ -29,15 +29,16 @@ function App() {
 
   return (
     <>
-    <div id='mainmenu'>
+    <div class="container">
+      <div class="row">
 
-      <div>
-      <MovieCards/>
+        <div class="col-sm">
+          <MovieCards/>
 
-      </div>
-      <div>
-
-      <Favorites />
+        </div>
+        <div class="col-sm">
+          <Favorites />
+        </div>
       </div>
     </div>
     </>

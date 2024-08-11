@@ -1,8 +1,8 @@
-#root {
+/* #root {
   max-width: 20%;
-  /*margin: 0 auto;
+  margin: 0 auto;
   padding: 2rem;
-  text-align: center; */
+  text-align: center;
   display:flex;
   flex-direction: row;
 }
@@ -10,4 +10,4 @@
 div #mainmenu {
   display: flex;
   flex-direction: row;
-}
+} */
