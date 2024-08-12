@@ -100,7 +100,6 @@ function MovieCards() {
     
     return (
         <div>
-            <h1>Movies: </h1>
             <List movies={movieData.Search}/>
         </div>
     );

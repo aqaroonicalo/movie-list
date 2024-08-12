@@ -29,19 +29,29 @@ function App() {
 
   return (
     <>
-    <div class="container">
-      <div class="row">
-
-        <div class="col-sm">
-          <MovieCards/>
-
+    <div className="container">
+      <div className="row">
+        <div className="col-12">
+          <h1 className="text-center my-4">Movie App</h1>
         </div>
-        <div class="col-sm">
-          <Favorites />
+      </div>
+      <div className="row">
+        <div className="col-sm-7">
+          <div className="p-3 rounded shadow-sm bg-light" style={{ borderRadius: '15px', overflowY: 'auto', maxWidth: '' }}>
+            <h2 className="text-center">Movie List</h2>
+            <MovieCards />
+          </div>
+        </div>
+        <div className="col-sm-5">
+          <div className="p-3 rounded shadow-sm bg-light" style={{ borderRadius: '15px', overflowY: 'auto', maxHeight: '500px' }}>
+            <h2 className="text-center">Liked Movies</h2>
+            <Favorites />
+          </div>
         </div>
       </div>
     </div>
-    </>
+  </>
+  
   )
 }
 
