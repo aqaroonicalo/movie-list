@@ -7,7 +7,7 @@ function Favorites () {
     let likedMovies = likedMoviesStore((state) => state.likedMovies)
     
 
-    return <div className="container mt-4">
+    return <div className="container mt-4 mb-4">
     {likedMovies.length === 0 ? (
       <p>No favorites yet.</p>
     ) : (

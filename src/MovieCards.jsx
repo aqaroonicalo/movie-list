@@ -40,20 +40,20 @@ export function MovieCard(props) {
     }
 
 
-    return <li className="card" style={{ width: '36rem', margin: 'auto', padding: '5px' }} key={props.data.imdbID}>
+    return <li className="card" style={{ width: 'auto', margin: '10px', padding: '5px' }} key={props.data.imdbID}>
     <div className="d-flex">
-      <div style={{ flex: '0 0 auto', width: '50%', marginRight: '10px', display: 'flex', alignItems: 'center' }}>
+      <div style={{ flex: '0 0 auto', width: '50%', marginRight: '', display: 'flex', justifyContent: 'center' }}>
         <img
           src={info.Poster}
           alt="Card image cap"
-          style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
         />
       </div>
       <div style={{ flex: '1 1 auto' }}>
         <div className="card-body p-0">
           <h5 className="card-title mb-2" style={{ fontSize: '1rem', marginBottom: '5px' }}>{props.data.Title}</h5>
           <p className="card-text mb-2" style={{ fontSize: '0.9rem', marginBottom: '5px' }}>{info.Plot}</p>
-          <button onClick={() => handleLike(props.data.Title)} className="btn btn-primary btn-sm">
+          <button onClick={() => handleLike(props.data.Title)} className= {liked ? "btn btn-danger btn-sm" : "btn btn-primary btn-sm"} id="likebutton">
             {liked ? 'LIKED!' : 'Click To Like'}
           </button>
         </div>
