@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef } from "react"
 import { searchStore } from "./App";
+import './Search.css'
 
 export function Search () {
     const inputRef = useRef(null)
@@ -42,6 +43,9 @@ export function Search () {
         console.log("Search term is now " + currSearchTerm)
     }
     return <>
-        <input ref={inputRef} onChange={throttledFunc}></input>
+    <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Name" name="name" id='name' ref={inputRef} onChange={throttledFunc} required />
+            <label for="name" class="form__label">Name</label>
+    </div>
     </>
 }
