@@ -16,7 +16,7 @@ function Favorites () {
           console.log(movie);
           return (
             <li key={likedMovies.indexOf(movie)} className="list-group-item d-flex justify-content-between align-items-center">
-              {movie}
+              {movie.Title}
               <span className="badge badge-primary badge-pill">★</span>
             </li>
           );

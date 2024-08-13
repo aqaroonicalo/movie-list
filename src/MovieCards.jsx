@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 import './MovieCards.css'
 import { useStore } from "zustand";
-import { likedMoviesStore } from "./App";
+import { likedMoviesStore, searchStore } from "./App";
 
 
 export function MovieCard(props) {
+    // console.log("FROM movie card")
+    // console.log(props.data)
     let [info, setInfo] = useState({})
     let [liked, setLike] = useState(false)
+    
 
     useEffect(() => {
 
@@ -18,29 +21,29 @@ export function MovieCard(props) {
                     throw new Error(`Response status: ${response.status}`)
                 }
                 info = await response.json()
-                console.log(info)
+                //console.log(info)
                 setInfo(info)
             } catch (error) {
                 console.error(error.message)
             }})()
     },[])
 
+
     const addLike = likedMoviesStore((state) => state.addLike)
     const removeLike = likedMoviesStore((state) => state.removeLike)
+    
 
-    function handleLike(title) {
-        
-        if (!liked) {
-            addLike(title)
-            setLike(true)
+    function handleLike(movie) {
+        // console.log(movie)
+        if (!movie.fav) {
+            addLike(movie)
         }else {
-            removeLike(title)
-            setLike(false)
+            removeLike(movie)
         }
     }
 
 
-    return <li className="card" style={{ width: 'auto', margin: '10px', padding: '5px' }} key={props.data.imdbID}>
+    return <li className="card" style={{ width: 'auto', margin: '10px', padding: '5px' }} >
     <div className="d-flex">
       <div style={{ flex: '0 0 auto', width: '50%', marginRight: '', display: 'flex', justifyContent: 'center' }}>
         <img
@@ -53,8 +56,8 @@ export function MovieCard(props) {
         <div className="card-body p-0">
           <h5 className="card-title mb-2" style={{ fontSize: '1rem', marginBottom: '5px' }}>{props.data.Title}</h5>
           <p className="card-text mb-2" style={{ fontSize: '0.9rem', marginBottom: '5px' }}>{info.Plot}</p>
-          <button onClick={() => handleLike(props.data.Title)} className= {liked ? "btn btn-danger btn-sm" : "btn btn-primary btn-sm"} id="likebutton">
-            {liked ? 'LIKED!' : 'Click To Like'}
+          <button onClick={() => handleLike(props.data)} className= {props.data.fav ? "btn btn-danger btn-sm" : "btn btn-primary btn-sm"} id="likebutton">
+            {props.data.fav ? 'LIKED!' : 'Click To Like'}
           </button>
         </div>
       </div>
@@ -72,8 +75,8 @@ function List(props) {
     return (
         <ul >
           {props.movies.map((movie) => {
-            console.log(movie)
-            return <MovieCard data={movie}/>;
+            //console.log(movie)
+            return <MovieCard key={movie.imdbID} data={movie}/>;
           })}
         </ul>
       );
@@ -81,21 +84,32 @@ function List(props) {
 
 function MovieCards() {
     let [movieData, setMovieData] = useState({})
-    
+    let searchTerm = searchStore((state) => state.searchTerm)
+    const likedMovies = likedMoviesStore((state) => state.likedMovies)
     useEffect(() => {
         
-        (async () => { const url = "https://www.omdbapi.com/?s=SUPERMAN&apikey=881763cb"
+        (async () => {
+            console.log(searchTerm)
+            let searchurlkey = searchTerm ==='' ? 'superman' : searchTerm;
+            // let url = "https://www.omdbapi.com/?s=" + searchTerm === '' ? 'superman': searchTerm + "&apikey=881763cb"
+            let url = "https://www.omdbapi.com/?s=" + searchurlkey + "&apikey=881763cb"
         try {
             const response = await fetch(url)
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`)
             }
             movieData = await response.json()
+            movieData.Search = movieData.Search.map((movie)=>{
+                return {
+                    ...movie,
+                    fav: likedMovies.some((likedmovie) => likedmovie.imdbID === movie.imdbID)
+                }
+            })
             setMovieData(movieData)
         } catch (error) {
             console.error(error.message)
         }})()
-    }, [])
+    }, [searchTerm])
 
     
     return (
