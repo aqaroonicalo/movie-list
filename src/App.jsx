@@ -1,35 +1,78 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import MovieCards  from './MovieCards'
+import Favorites  from './Favorites'
+import { Search } from './Search'
+
+import { create } from 'zustand'
+
+export const searchStore = create((set) =>
+  ({
+    searchTerm: '',
+    setTerm: (newTerm) => set((state) => {
+      console.log(newTerm);
+      return {searchTerm: newTerm};
+    })
+  })
+)
+
+export const likedMoviesStore = create((set) => ({
+  count: 0, 
+  likedMovies: [],
+  addLike: (addedMovie) => set((state) => {
+    addedMovie.fav = true
+    const updatedLikedMovies = [...state.likedMovies, addedMovie];
+    console.log(updatedLikedMovies);
+    return { ...state, likedMovies: updatedLikedMovies };
+
+  } ),
+  removeLike: (removedMovie) => 
+    set((state) => {
+      removedMovie.fav = false
+      const updatedLikedMovies = state.likedMovies.filter(movie => movie.imdbID !== removedMovie.imdbID);
+      console.log(updatedLikedMovies);
+      return { ...state, likedMovies: updatedLikedMovies};
+  
+    } )
+}))
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container-fluid">
+      <div className="row ">
+        <div className="col-4">
+          <h1 className="text-center my-4">Movie App</h1>
+        </div>
+        <div className="col-2">
+          <h1 className="text-center my-4">Search: </h1>
+        </div>
+        <div className="col-2">
+          <Search />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="row justify-content-md-center">
+        <div className="col-sm-4">
+          <div className="bg-light" style={{ border: 'solid, black, 2px',borderRadius: '30px', overflowY: 'auto', maxWidth: 'auto' }}>
+            <h2 className="text-center">Movie List</h2>
+            <MovieCards />
+          </div>
+        </div>
+        <div className="col-sm-3">
+          <div className="bg-light" style={{ border: 'solid, black, 2px', borderRadius: '15px', overflowY: 'auto', maxHeight: 'auto' }}>
+            <h2 className="text-center">Liked Movies</h2>
+            <Favorites />
+          </div>
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
+  </>
+  
   )
 }
 
 export default App
+
